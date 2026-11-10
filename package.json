@@ -1,0 +1,33 @@
+{
+  "name": "gamini-central-college-evidence-portal",
+  "version": "1.0.0",
+  "description": "Professional evidence and article management portal for Gamini Central College - Nuwara Eliya",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "init": "node src/init.js",
+    "reset-admin": "node src/reset-admin.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "better-sqlite3": "^12.4.1",
+    "connect-sqlite3": "^0.9.15",
+    "dotenv": "^17.2.3",
+    "ejs": "^3.1.10",
+    "express": "^5.1.0",
+    "express-session": "^1.18.2",
+    "helmet": "^8.1.0",
+    "morgan": "^1.10.1",
+    "multer": "^2.0.2",
+    "pg": "^8.16.3"
+  },
+  "allowScripts": {
+    "better-sqlite3@12.11.1": true,
+    "sqlite3@5.1.7": true
+  }
+}

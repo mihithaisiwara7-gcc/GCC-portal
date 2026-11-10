@@ -1,0 +1,20 @@
+<%- include('partials-head', { pageTitle }) %>
+<section class="page-title-row">
+  <div><a class="back-link" href="/themes/<%= theme.key %>/articles<%= isEdit && article ? '/' + article.id : '' %>">← <%= isEdit ? 'Back to article' : 'Back to ' + theme.shortTitle %></a><h1><%= isEdit ? 'Edit Article' : 'Add Article' %></h1><p class="muted"><%= theme.title %> · Academic Year <%= currentYear %></p></div>
+</section>
+<form class="article-form panel" action="<%= isEdit ? '/themes/' + theme.key + '/articles/' + article.id + '/edit' : '/themes/' + theme.key + '/articles' %>" method="post" <%= isEdit ? '' : 'enctype="multipart/form-data"' %>>
+  <input type="hidden" name="csrfToken" value="<%= csrfToken %>">
+  <label>Article title<input name="title" maxlength="300" required placeholder="Enter a clear title" value="<%= article?.title || '' %>"></label>
+  <label>Short description / notes<textarea name="description" rows="6" maxlength="10000" placeholder="Optional summary or notes about this evidence..."><%= article?.description || '' %></textarea></label>
+  <% if (!isEdit) { %>
+    <div class="upload-grid">
+      <div class="upload-box"><div class="upload-symbol">📎</div><h3>Documents</h3><p>Word, PDF, Excel, PowerPoint, text and CSV files. Each file can be up to <strong>2 GB</strong>.</p><input type="file" name="documents" multiple accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt,.csv"></div>
+      <div class="upload-box"><div class="upload-symbol">🖼️</div><h3>Images</h3><p>Add as many supporting images as your storage allows.</p><input type="file" name="images" multiple accept="image/*"></div>
+    </div>
+    <div class="form-note"><strong>Important:</strong> Large files are stored on the server filesystem while PostgreSQL stores the article and attachment metadata. Configure a persistent storage volume for production hosting.</div>
+  <% } else { %>
+    <div class="form-note">Editing updates the article title and notes. Existing supporting files will be kept.</div>
+  <% } %>
+  <div class="form-actions"><a class="btn btn-outline" href="<%= isEdit ? '/themes/' + theme.key + '/articles/' + article.id : '/themes/' + theme.key %>">Cancel</a><button class="btn btn-primary" type="submit"><%= isEdit ? 'Save Changes' : 'Save Article & Files' %></button></div>
+</form>
+<%- include('partials-foot') %>

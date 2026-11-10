@@ -1,0 +1,71 @@
+<%- include('partials-head', { pageTitle }) %>
+
+<section class="hero">
+  <div class="hero-copy">
+    <span class="eyebrow">Gamini Central College · Evidence Portal</span>
+    <h1>A clearer way to manage school evidence.</h1>
+    <p>Keep articles, documents and supporting images organised by evaluation theme and academic year, all in one secure workspace.</p>
+    <div class="hero-meta">
+      <span class="hero-meta-item"><span class="hero-dot"></span> Academic year <strong><%= currentYear %></strong></span>
+      <span class="hero-meta-item">8 evaluation themes</span>
+    </div>
+  </div>
+  <div class="hero-art" aria-label="Gamini Central College branding">
+    <div class="hero-ring hero-ring-one"></div>
+    <div class="hero-ring hero-ring-two"></div>
+    <div class="hero-logo-wrap">
+      <img src="/images/gcc-logo.png" alt="Gamini Central College crest" onerror="this.onerror=null;this.src='/images/school-logo.png'">
+    </div>
+    <span class="hero-art-label">LEARN · GROW · EXCEL</span>
+  </div>
+</section>
+
+<section class="section-heading theme-section-heading">
+  <div>
+    <span class="eyebrow eyebrow-muted">Your workspace</span>
+    <h2>Explore the evaluation themes</h2>
+    <p class="section-description">Choose a theme to sign in and view its evidence records.</p>
+  </div>
+  <span class="section-count"><strong>08</strong><span>THEMES</span></span>
+</section>
+
+<section class="theme-grid" aria-label="Evaluation themes">
+  <% themes.forEach((theme, index) => { %>
+    <article class="theme-card">
+      <div class="theme-card-top">
+        <span class="theme-icon"><%= theme.icon %></span>
+        <span class="card-number"><%= String(index + 1).padStart(2, '0') %></span>
+      </div>
+      <h3><%= theme.shortTitle %></h3>
+      <p><%= theme.description %></p>
+      <div class="theme-card-actions"><a class="card-link" href="/login/<%= theme.key %>">Open theme <span aria-hidden="true">↗</span></a><a class="btn btn-small btn-outline" href="/themes/<%= theme.key %>/issues">Issues</a></div>
+    </article>
+  <% }) %>
+</section>
+
+<section class="section-heading theme-section-heading administrator-heading">
+  <div>
+    <span class="eyebrow eyebrow-muted">Restricted workspace</span>
+    <h2>Administrator</h2>
+    <p class="section-description">Manage all eight evaluation themes from one administrator session.</p>
+  </div>
+</section>
+<section class="theme-grid administrator-card-grid" aria-label="Administrator access">
+  <a class="theme-card administrator-card" href="/administrator">
+    <div class="theme-card-top"><span class="theme-icon">🔐</span><span class="card-number">ADMIN</span></div>
+    <h3>Administrator</h3>
+    <p>Open the secure administrator workspace to access every theme and manage articles across the portal.</p>
+    <span class="card-link">Administrator sign-in / workspace <span aria-hidden="true">↗</span></span>
+  </a>
+</section>
+
+<section class="home-help panel">
+  <div class="help-icon" aria-hidden="true">i</div>
+  <div>
+    <h2>Need account access?</h2>
+    <p>Teachers should use the ID assigned by the school. Administrators can manage accounts and the academic year through IDPS Administration.</p>
+  </div>
+  <a class="btn btn-outline" href="/idps">IDPS Administration <span aria-hidden="true">→</span></a>
+</section>
+
+<%- include('partials-foot') %>

@@ -1,0 +1,27 @@
+<%- include('partials-head', { pageTitle }) %>
+<section class="page-title-row">
+  <div>
+    <a class="back-link" href="/">← All themes</a>
+    <div class="theme-title"><div class="theme-icon large"><%= theme.icon %></div><div><span class="eyebrow">Theme workspace</span><h1><%= theme.shortTitle %></h1><p class="muted"><%= theme.title %></p></div></div>
+  </div>
+  <div class="theme-actions"><a class="btn btn-outline" href="/themes/<%= theme.key %>/issues">⚑ Issues</a><a class="btn btn-primary" href="/themes/<%= theme.key %>/articles/new">＋ Add Article</a></div>
+</section>
+
+<div class="toolbar">
+  <div><strong><%= year %></strong> · <span class="muted"><%= articles.length %> article<%= articles.length === 1 ? '' : 's' %></span></div>
+  <form method="get" action="/themes/<%= theme.key %>" class="search-form"><input name="search" value="<%= search %>" placeholder="Search articles..."><button class="btn btn-outline" type="submit">Search</button></form>
+</div>
+
+<section class="article-list">
+  <% if (!articles.length) { %>
+    <div class="empty-state"><div class="empty-icon">📄</div><h2>No articles yet</h2><p>Start this year's evidence set by adding the first article and its supporting files.</p><a class="btn btn-primary" href="/themes/<%= theme.key %>/articles/new">Add the first article</a></div>
+  <% } %>
+  <% articles.forEach(article => { %>
+    <a class="article-row" href="/themes/<%= theme.key %>/articles/<%= article.id %>">
+      <div class="article-icon">📄</div>
+      <div class="article-main"><h3><%= article.title %></h3><p><%= article.description || 'No description provided.' %></p></div>
+      <div class="article-meta"><span><%= article.createdBy %></span><span><%= new Date(article.updatedAt).toLocaleDateString() %></span><span>View →</span></div>
+    </a>
+  <% }) %>
+</section>
+<%- include('partials-foot') %>

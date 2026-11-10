@@ -1,0 +1,18 @@
+<%- include('partials-head', { pageTitle }) %>
+<div class="auth-wrap">
+  <div class="auth-card">
+    <a class="back-link" href="/">← Back to dashboard</a>
+    <div class="theme-icon large">🔐</div>
+    <span class="eyebrow">IDPS</span>
+    <h1>Administration</h1>
+    <p class="muted">Manage teacher IDs, passwords and the active academic year.</p>
+    <% if (error) { %><div class="alert error"><%= error %></div><% } %>
+    <form method="post" action="/idps" class="stack-form">
+      <input type="hidden" name="csrfToken" value="<%= csrfToken %>">
+      <label>Username<input name="username" autocomplete="username" required autofocus></label>
+      <label>Password<input name="password" type="password" autocomplete="current-password" required></label>
+      <button class="btn btn-primary btn-wide" type="submit">Open IDPS</button>
+    </form>
+  </div>
+</div>
+<%- include('partials-foot') %>

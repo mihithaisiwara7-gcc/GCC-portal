@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Gamini Central College - Nuwara Eliya evidence and article portal">
+  <title><%= pageTitle ? pageTitle + ' | ' : '' %>Gamini Central College</title>
+  <link rel="icon" href="/images/school-logo.png">
+  <link rel="stylesheet" href="/css/app.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="brand" href="/">
+      <img src="/images/school-logo.png" alt="Gamini Central College logo" class="logo">
+      <div>
+        <div class="brand-name">Gamini Central College</div>
+        <div class="brand-location">Nuwara Eliya</div>
+      </div>
+    </a>
+    <div class="header-actions">
+      <span class="year-pill">Academic Year <strong><%= currentYear %></strong></span>
+      <button class="icon-btn" type="button" id="themeToggle" title="Toggle light/dark theme" aria-label="Toggle theme">◐</button>
+      <% if (user) { %>
+        <span class="user-pill"><%= user.username %><%= user.role === 'admin' ? ' · Admin' : '' %></span>
+        <form action="/logout" method="post" class="inline-form">
+          <input type="hidden" name="csrfToken" value="<%= csrfToken %>">
+          <button class="btn btn-outline" type="submit">Logout</button>
+        </form>
+      <% } %>
+    </div>
+  </div>
+</header>
+<main class="container page-shell">

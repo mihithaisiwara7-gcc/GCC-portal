@@ -1,0 +1,51 @@
+<%- include('partials-head', { pageTitle }) %>
+<section class="page-title-row">
+  <div><a class="back-link" href="/administrator">← Back to Administrator Workspace</a><span class="eyebrow">Administrator workspace</span><h1>IDPS Administration</h1><p class="muted">Create and manage teacher access without putting credentials into source code.</p></div>
+</section>
+
+<section class="admin-grid">
+  <div class="panel">
+    <div class="panel-head"><div><h2>Academic Year</h2><p class="muted">This year controls which article set teachers see.</p></div></div>
+    <form action="/idps/year" method="post" class="inline-setting-form">
+      <input type="hidden" name="csrfToken" value="<%= csrfToken %>">
+      <input name="year" type="number" min="2000" max="2100" value="<%= currentYear %>" required>
+      <button class="btn btn-primary" type="submit">Save Year</button>
+    </form>
+  </div>
+
+  <div class="panel">
+    <div class="panel-head"><div><h2>Create ID</h2><p class="muted">Only accounts created here can access teacher themes.</p></div></div>
+    <form action="/idps/users" method="post" class="stack-form compact">
+      <input type="hidden" name="csrfToken" value="<%= csrfToken %>">
+      <label>Username<input name="username" minlength="3" maxlength="50" required></label>
+      <label>Password<input name="password" type="password" minlength="8" required></label>
+      <label>Role<select name="role" id="roleSelect"><option value="teacher">Teacher</option><option value="admin">Administrator</option></select></label>
+      <label id="themeField">Theme<select name="themeKey"><% themes.forEach(theme => { %><option value="<%= theme.key %>"><%= theme.shortTitle %></option><% }) %></select></label>
+      <button class="btn btn-primary" type="submit">Create Account</button>
+    </form>
+  </div>
+</section>
+
+<section class="panel table-panel">
+  <div class="panel-head"><div><h2>Existing IDPS Accounts</h2><p class="muted">No additional accounts are created automatically.</p></div></div>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Username</th><th>Role</th><th>Theme</th><th>Status</th><th>Actions</th></tr></thead>
+      <tbody>
+      <% users.forEach(account => { %>
+        <tr>
+          <td><strong><%= account.username %></strong></td>
+          <td><span class="tag"><%= account.role %></span></td>
+          <td><%= account.themeKey ? (themes.find(t => t.key === account.themeKey)?.shortTitle || account.themeKey) : 'All themes' %></td>
+          <td><span class="status <%= account.active ? 'active' : 'inactive' %>"><%= account.active ? 'Active' : 'Disabled' %></span></td>
+          <td class="actions-cell">
+            <form action="/idps/users/<%= account.id %>/toggle" method="post" class="inline-form"><input type="hidden" name="csrfToken" value="<%= csrfToken %>"><button class="btn btn-small btn-outline" type="submit"><%= account.active ? 'Disable' : 'Enable' %></button></form>
+            <form action="/idps/users/<%= account.id %>/password" method="post" class="inline-form password-action"><input type="hidden" name="csrfToken" value="<%= csrfToken %>"><input name="password" type="password" minlength="8" placeholder="New password" required><button class="btn btn-small btn-primary" type="submit">Change</button></form>
+          </td>
+        </tr>
+      <% }) %>
+      </tbody>
+    </table>
+  </div>
+</section>
+<%- include('partials-foot') %>

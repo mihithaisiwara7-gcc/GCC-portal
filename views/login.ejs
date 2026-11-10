@@ -1,0 +1,18 @@
+<%- include('partials-head', { pageTitle }) %>
+<div class="auth-wrap">
+  <div class="auth-card">
+    <a class="back-link" href="/">← Back to dashboard</a>
+    <div class="theme-icon large"><%= theme.icon %></div>
+    <span class="eyebrow">Secure Theme Access</span>
+    <h1><%= theme.shortTitle %></h1>
+    <p class="muted"><%= theme.title %></p>
+    <% if (error) { %><div class="alert error"><%= error %></div><% } %>
+    <form method="post" action="/login/<%= theme.key %>" class="stack-form">
+      <input type="hidden" name="csrfToken" value="<%= csrfToken %>">
+      <label>Teacher ID<input name="username" autocomplete="username" required autofocus></label>
+      <label>Password<input name="password" type="password" autocomplete="current-password" required></label>
+      <button class="btn btn-primary btn-wide" type="submit">Sign in</button>
+    </form>
+  </div>
+</div>
+<%- include('partials-foot') %>

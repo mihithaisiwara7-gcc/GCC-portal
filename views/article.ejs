@@ -1,0 +1,23 @@
+<%- include('partials-head', { pageTitle }) %>
+<section class="page-title-row">
+  <div><a class="back-link" href="/themes/<%= theme.key %>">← Back to <%= theme.shortTitle %></a><span class="eyebrow">Article · <%= article.year %></span><h1><%= article.title %></h1><p class="muted">Added by <%= article.createdBy %> · <%= new Date(article.createdAt).toLocaleString() %></p></div>
+  <div class="article-actions"><a class="btn btn-outline" href="/themes/<%= theme.key %>/articles/<%= article.id %>/edit">Edit Article</a><form action="/themes/<%= theme.key %>/articles/<%= article.id %>/delete" method="post" onsubmit="return confirm('Delete this article and its files? This cannot be undone.')"><input type="hidden" name="csrfToken" value="<%= csrfToken %>"><button class="btn btn-danger" type="submit">Delete</button></form></div>
+</section>
+<section class="panel article-detail">
+  <h2>Article Notes</h2>
+  <div class="prose"><%= article.description || 'No additional notes were provided.' %></div>
+</section>
+<section class="panel">
+  <div class="panel-head"><div><h2>Supporting Evidence</h2><p class="muted"><%= attachments.length %> file<%= attachments.length === 1 ? '' : 's' %></p></div></div>
+  <% if (!attachments.length) { %><div class="empty-mini">No files attached to this article.</div><% } %>
+  <div class="attachment-grid">
+    <% attachments.forEach(file => { %>
+      <a class="attachment" href="/attachments/<%= file.id %>">
+        <span class="attachment-icon"><%= file.kind === 'image' ? '🖼️' : '📎' %></span>
+        <span><strong><%= file.originalName %></strong><small><%= file.kind %> · <%= (Number(file.sizeBytes) / 1024 / 1024).toFixed(2) %> MB</small></span>
+        <span>↓</span>
+      </a>
+    <% }) %>
+  </div>
+</section>
+<%- include('partials-foot') %>

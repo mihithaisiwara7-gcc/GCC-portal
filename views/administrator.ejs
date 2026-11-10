@@ -1,0 +1,17 @@
+<%- include('partials-head', { pageTitle }) %>
+<section class="page-title-row administrator-page-heading">
+  <div><span class="eyebrow">Restricted · Administrator account</span><h1>Administrator Workspace</h1><p class="muted">Welcome, <strong><%= user.username %></strong>. Select any evaluation theme. Your administrator session is shared across all eight themes, so you will not need to sign in again for each one.</p></div>
+  <a class="btn btn-outline" href="/idps/admin">Manage IDPS Accounts →</a>
+</section>
+<section class="section-heading theme-section-heading"><div><span class="eyebrow eyebrow-muted">Full access</span><h2>All evaluation themes</h2><p class="section-description">Open a theme to view, create, edit or delete its article records.</p></div><span class="section-count"><strong>08</strong><span>THEMES</span></span></section>
+<section class="theme-grid" aria-label="All eight evaluation themes">
+  <% themes.forEach((theme, index) => { %>
+    <article class="theme-card">
+      <div class="theme-card-top"><span class="theme-icon"><%= theme.icon %></span><span class="card-number"><%= String(index + 1).padStart(2, '0') %></span></div>
+      <h3><%= theme.shortTitle %></h3><p><%= theme.description %></p>
+      <div class="theme-card-actions"><a class="card-link" href="/themes/<%= theme.key %>">Open theme <span aria-hidden="true">↗</span></a><a class="btn btn-small btn-outline" href="/themes/<%= theme.key %>/issues">Issues</a></div>
+    </article>
+  <% }) %>
+</section>
+<section class="home-help panel administrator-help"><div class="help-icon" aria-hidden="true">✓</div><div><h2>Administrator session active</h2><p>You can move between themes without entering your ID or password again. Keep your account credentials private and log out when finished.</p></div><a class="btn btn-outline" href="/idps/admin">Manage accounts</a></section>
+<%- include('partials-foot') %>
